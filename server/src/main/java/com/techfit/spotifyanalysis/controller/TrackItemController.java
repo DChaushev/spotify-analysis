@@ -1,13 +1,12 @@
 package com.techfit.spotifyanalysis.controller;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techfit.spotifyanalysis.model.TrackItem;
 import com.techfit.spotifyanalysis.repository.TrackItemRepository;
+
+import se.michaelthelin.spotify.model_objects.specification.Track;
 
 @RestController
 @RequestMapping("/tracks")
@@ -20,7 +19,7 @@ public class TrackItemController {
     }
 
     @GetMapping
-    public List<TrackItem> getAll() {
+    public Track[] getAll() {
         return repository.getAll();
     }
 }

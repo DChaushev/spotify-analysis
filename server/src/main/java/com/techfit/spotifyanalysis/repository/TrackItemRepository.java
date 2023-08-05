@@ -1,44 +1,27 @@
 package com.techfit.spotifyanalysis.repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.stereotype.Repository;
 
-import com.techfit.spotifyanalysis.model.Track;
-import com.techfit.spotifyanalysis.model.TrackItem;
+import se.michaelthelin.spotify.SpotifyApi;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 
 @Repository
 public class TrackItemRepository {
-    private final List<TrackItem> trackItems = new ArrayList<>();
+    private static final String accessToken = "<access-token>";
 
-    public TrackItemRepository() {
-        trackItems.add(
-            new TrackItem(
-                new Track(new String[] {"Eminem"},
-                "Loose Youself",
-                "8-th Mile",
-                300_000),
-            "some-time"));
+    private final SpotifyApi api = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
-        trackItems.add(
-            new TrackItem(
-                new Track(new String[] {"Linkin Park"},
-                "In the end",
-                "Hybrid theory",
-                300_000),
-            "some-time"));
-        
-        trackItems.add(
-            new TrackItem(
-                new Track(new String[] {"Disturbed"},
-                "Into the fire",
-                "Sons of plunder",
-                300_000),
-            "some-time"));
-    }
-
-    public List<TrackItem> getAll() {
-        return trackItems;
+    public Track[] getAll() {
+        try {
+            Track[] topTracks = api.getUsersTopTracks().build().execute().getItems();
+            return topTracks;
+        } catch (ParseException | SpotifyWebApiException | IOException e) {
+            e.printStackTrace();
+        }
+        return new Track[]{};
     }
 }
