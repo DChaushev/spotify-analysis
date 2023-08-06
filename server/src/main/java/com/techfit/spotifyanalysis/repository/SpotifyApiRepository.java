@@ -19,18 +19,18 @@ import se.michaelthelin.spotify.requests.data.personalization.simplified.GetUser
 
 @Repository
 public class SpotifyApiRepository implements TracksRepository {
-    private static final String accessToken = "BQDSds39fwbFPZ83CzhWcWQlzDz-6T6csuKjIA0ArkTX2oXvrzAaOTz30cSZVC8jKAgJWFaXUfg3KzV_e1o_HCNKF_A-aueaP5En0HFC6n84O3cuNG9Ead9AsZl7U1jz9zbZYh_vwTR7VWl3TaxkjHewZ5eNcE62e6pzDGEFieJ0JFjC3U0qsXf9ZXXtCrwEWVKVgg";
-
-    private final SpotifyApi api = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
     @Override
-    public ResultItem getTopTracks(Integer limit, Integer offset) throws Exception {
+    public ResultItem getTopTracks(String accessToken, Integer limit, Integer offset) throws Exception {
+        SpotifyApi api = new SpotifyApi.Builder()
+            .setAccessToken(accessToken)
+            .build();
         Builder queryBuilder = api.getUsersTopTracks();
         if (offset != null) {
-            // vadlite not null
+            //TODO: vadlidate limit and offset
             queryBuilder.offset(offset);
         }
-        try { 
+        try {
             Paging<Track> topTracks = queryBuilder
                 .limit(limit)
                 .build()
@@ -43,7 +43,7 @@ public class SpotifyApiRepository implements TracksRepository {
 
     private ResultItem convert(Paging<Track> topTracks) {
         List<TrackItem> tracks = new ArrayList<>();
-
+        
         Track[] items = topTracks.getItems();
         for (Track track : items) {
             tracks.add(
@@ -51,11 +51,15 @@ public class SpotifyApiRepository implements TracksRepository {
                     getArtistsNames(track.getArtists()),
                     track.getName(),
                     track.getAlbum().getName(),
-                    track.getDurationMs()
+                    track.getDurationMs(),
+                    track.getAlbum() != null ? track.getAlbum().getImages()[0].getUrl() : "",
+                    track.getPreviewUrl()
                 )
             );
         }
-        return new ResultItem(tracks, topTracks.getTotal());
+        return new ResultItem(tracks, topTracks.getTotal(), 
+                    topTracks.getPrevious(),
+                    topTracks.getNext());
     }
 
     private String[] getArtistsNames(ArtistSimplified[] artistSimplified) {
