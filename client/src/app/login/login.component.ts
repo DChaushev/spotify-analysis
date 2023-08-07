@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 
 export class LoginComponent {
 
-  isLoggedIn: boolean = false;
-
+  login() {
+    window.location.href = `https://accounts.spotify.com/authorize?client_id=${environment.CLIENT_ID}&response_type=code&scope=user-top-read&redirect_uri=${environment.REDIRECT_URI}`;
+  }
 }

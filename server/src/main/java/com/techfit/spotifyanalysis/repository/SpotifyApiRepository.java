@@ -22,6 +22,7 @@ public class SpotifyApiRepository implements TracksRepository {
 
     @Override
     public ResultItem getTopTracks(String accessToken, Integer limit, Integer offset) throws Exception {
+        System.out.println("Setting accesToken: " + accessToken);
         SpotifyApi api = new SpotifyApi.Builder()
             .setAccessToken(accessToken)
             .build();
