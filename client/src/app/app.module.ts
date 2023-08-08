@@ -8,17 +8,19 @@ import { TracksComponent } from './tracks/tracks.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatTableModule} from '@angular/material/table'
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table'
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { LoginComponent } from './login/login.component';
 import { CallbackComponent } from './callback/callback.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TracksComponent,
     LoginComponent,
-    CallbackComponent
+    CallbackComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

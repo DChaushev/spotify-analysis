@@ -24,7 +24,7 @@ export class CallbackComponent implements OnInit {
     });
 
     let base64Encoded = btoa(`${environment.CLIENT_ID}:${environment.CLIENT_SECRET}`);
-    console.log(this.code)
+    console.log(base64Encoded)
 
     let body = new HttpParams()
       .set("grant_type", "authorization_code")
@@ -43,7 +43,8 @@ export class CallbackComponent implements OnInit {
     .subscribe(data => {
       console.log(data)
       let accessToken = data['access_token'];
-      this.router.navigate(['/toptracks', { access_token: accessToken}]);
+      localStorage.setItem('token', accessToken);
+      this.router.navigate(['/toptracks']);
     });
   }
 }

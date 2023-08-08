@@ -1,4 +1,4 @@
-import { Component, ViewChild, inject, OnInit } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { TopTracksService } from '../top-tracks.service';
 import { Track } from '../track';
 import { QuerySpec } from '../query-spec';
@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { catchError, map, startWith, switchMap, of as observableOf } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-tracks',
@@ -29,13 +30,14 @@ export class TracksComponent {
   totalData!: number;
   dataSource = new MatTableDataSource<Track>();
   
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      console.log(params)
-      this.accessToken = params['access_token'];
-    })};
+  constructor(
+    private route: ActivatedRoute,
+    private auth: AuthService) {
+      let token = auth.getToken();
+      if (token != null) {
+        this.accessToken = token;
+      }
+  }
 
   msToReadableString(duration_ms:number) {
     let minutes = Math.floor((duration_ms % 3600000) / 60000);
