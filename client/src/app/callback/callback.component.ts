@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-callback',
@@ -12,11 +13,12 @@ import { environment } from '../../environments/environment';
 })
 export class CallbackComponent implements OnInit {
   code!: string;
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient) {}
+    private http: HttpClient,
+    private auth: AuthService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -35,16 +37,15 @@ export class CallbackComponent implements OnInit {
       body,
       {
         headers: new HttpHeaders({
-          'Content-Type':  'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: `Basic ${base64Encoded}`
         })
-      }
-    )
-    .subscribe(data => {
-      console.log(data)
-      let accessToken = data['access_token'];
-      localStorage.setItem('token', accessToken);
-      this.router.navigate(['/toptracks']);
-    });
+      })
+      .subscribe(data => {
+        console.log(data)
+        let accessToken = data['access_token'];
+        this.auth.setToken(accessToken);
+        this.router.navigate(['/toptracks']);
+      });
   }
 }

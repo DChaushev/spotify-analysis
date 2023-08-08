@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
 })
 
 export class LoginComponent {
-
   login() {
     window.location.href = `https://accounts.spotify.com/authorize?client_id=${environment.CLIENT_ID}&response_type=code&scope=user-top-read&redirect_uri=${environment.REDIRECT_URI}`;
   }

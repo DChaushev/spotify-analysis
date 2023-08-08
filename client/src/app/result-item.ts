@@ -1,8 +1,8 @@
-import { Track } from "./track";
+import { Track } from './track';
 
 export interface ResultItem {
-    resultItems: Track[],
-    total: number,
-    previous: string,
-    next: string
+    resultItems: Track[];
+    total: number;
+    previous: string;
+    next: string;
 }

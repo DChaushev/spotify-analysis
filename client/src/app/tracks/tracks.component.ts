@@ -29,17 +29,17 @@ export class TracksComponent {
   pageSizes = [this.limit];
   totalData!: number;
   dataSource = new MatTableDataSource<Track>();
-  
+
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService) {
-      let token = auth.getToken();
-      if (token != null) {
-        this.accessToken = token;
-      }
+    let token = auth.getToken();
+    if (token != null) {
+      this.accessToken = token;
+    }
   }
 
-  msToReadableString(duration_ms:number) {
+  msToReadableString(duration_ms: number) {
     let minutes = Math.floor((duration_ms % 3600000) / 60000);
     let seconds = Math.floor(((duration_ms % 360000) % 60000) / 1000);
     return minutes + ":" + seconds;
@@ -55,7 +55,6 @@ export class TracksComponent {
   }
 
   ngAfterViewInit() {
-    
     this.dataSource.paginator = this.paginator;
 
     this.paginator.page
@@ -78,9 +77,5 @@ export class TracksComponent {
         this.trackList = resultItem;
         this.dataSource = new MatTableDataSource(this.trackList);
       });
-  }
-
-  logout() {
-    // TODO
   }
 }
