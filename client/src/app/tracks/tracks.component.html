@@ -24,7 +24,7 @@
 
     <ng-container matColumnDef="duration">
         <th mat-header-cell *matHeaderCellDef> Duration </th>
-        <td mat-cell *matCellDef="let track"> {{ msToReadableString(track.duration_ms) }} </td>
+        <td mat-cell *matCellDef="let track"> {{ getMinutesWithDecimalSeconds(track.duration_ms) | number : '1.2-2'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="preview">

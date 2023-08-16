@@ -39,10 +39,10 @@ export class TracksComponent {
     }
   }
 
-  msToReadableString(duration_ms: number) {
+  getMinutesWithDecimalSeconds(duration_ms: number) {
     let minutes = Math.floor((duration_ms % 3600000) / 60000);
     let seconds = Math.floor(((duration_ms % 360000) % 60000) / 1000);
-    return minutes + ":" + seconds;
+    return minutes + seconds / 100;
   }
 
   getTableData$(limit: number, offset: number, accessToken: string) {
