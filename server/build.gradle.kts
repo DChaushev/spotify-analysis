@@ -18,7 +18,8 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("se.michaelthelin.spotify:spotify-web-api-java:8.0.0")
+    implementation("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation("org.json:json:20230618")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

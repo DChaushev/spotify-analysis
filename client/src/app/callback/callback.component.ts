@@ -44,7 +44,9 @@ export class CallbackComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
         let accessToken = data['access_token'];
-        this.auth.setToken(accessToken);
+        let refreshToken = data['refresh_token'];
+
+        this.auth.setAccessToken(accessToken);
         this.router.navigate(['/toptracks']);
       });
   }

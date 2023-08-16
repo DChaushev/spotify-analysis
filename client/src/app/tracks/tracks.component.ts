@@ -33,7 +33,7 @@ export class TracksComponent {
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService) {
-    let token = auth.getToken();
+    let token = auth.getAccessToken();
     if (token != null) {
       this.accessToken = token;
     }
