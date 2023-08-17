@@ -1,7 +1,7 @@
 package com.techfit.spotifyanalysis.repository;
 
-import com.techfit.spotifyanalysis.model.ResultItem;
+import com.techfit.spotifyanalysis.controller.ResponseItem;
 
 public interface TracksRepository {
-    ResultItem getTopTracks(String accessToken, Integer limit, Integer offset) throws Exception;
+    ResponseItem getTopTracks(String accessToken, Integer limit, Integer offset) throws Exception;
 }

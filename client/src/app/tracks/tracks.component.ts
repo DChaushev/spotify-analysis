@@ -67,10 +67,11 @@ export class TracksComponent {
             this.accessToken
           ).pipe(catchError(() => observableOf(null)));
         }),
-        map((resultItem) => {
-          if (resultItem == null) return [];
-          this.totalData = resultItem.total;
-          return resultItem.resultItems;
+        map((responseItem) => {
+          if (responseItem == null) return [];
+          console.log(responseItem)
+          this.totalData = responseItem.resultItem.total;
+          return responseItem.resultItem.resultItems;
         })
       )
       .subscribe((resultItem) => {

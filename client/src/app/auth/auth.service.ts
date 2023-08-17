@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -26,5 +27,11 @@ export class AuthService {
     return token != null;
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  refreshToken(token: string) {
+    return this.http.post('https://accounts.spotify.com/api/token', {
+      refreshToken: token
+    }, {});
+  }  
 }

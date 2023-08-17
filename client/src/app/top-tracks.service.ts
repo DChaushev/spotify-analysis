@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ResultItem } from './result-item';
 import { QuerySpec } from './query-spec';
+import { ResponseItem } from './response-item';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,9 @@ export class TopTracksService {
 
   constructor(private http: HttpClient) { }
 
-  getTopTracks(querySpec: QuerySpec): Observable<ResultItem> {
+  getTopTracks(querySpec: QuerySpec): Observable<ResponseItem> {
     return this.http
-      .get<ResultItem>(this.url, {
+      .get<ResponseItem>(this.url, {
         headers: {
           Authorization: `Bearer ${querySpec.accessToken}`,
         },
@@ -23,27 +24,6 @@ export class TopTracksService {
           limit: querySpec.limit,
           offset: querySpec.offset,
         },
-      })
-      .pipe(
-        tap((_) => console.log('fetched tracks')),
-        catchError(
-          this.handleError<ResultItem>('getTopTracks', {
-            resultItems: [],
-            total: 0,
-            previous: '',
-            next: '',
-          })
-        )
-      );
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-
-      console.log(`${operation} failed: ${error.message}`);
-
-      return of(result as T);
-    };
+      });
   }
 }

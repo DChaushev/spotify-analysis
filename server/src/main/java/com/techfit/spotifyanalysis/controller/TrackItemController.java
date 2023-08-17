@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techfit.spotifyanalysis.model.ResultItem;
 import com.techfit.spotifyanalysis.repository.TracksRepository;
 
 @RestController
@@ -23,7 +22,7 @@ public class TrackItemController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping
-    public ResultItem getTopTracks(
+    public ResponseItem getTopTracks(
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @RequestParam Integer limit,
             @RequestParam(required = false) Integer offset) throws Exception {
